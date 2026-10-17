@@ -1,0 +1,101 @@
+name: Soykng
+intro: Computer Science and Technology undergraduate working on LLM applications and computer vision.
+focus: Currently working on Chatrix, a customer service platform built around RAG and agent workflows. This site collects my projects and technical notes.
+interests:
+- Machine learning
+- Computer vision
+- LLM applications
+- AI agents
+skills:
+- category: Programming
+  items:
+  - Python
+  - C++
+  - Java
+- category: Machine learning
+  items:
+  - PyTorch
+  - Model training
+  - Hyperparameter tuning
+  - Experiment design
+  - Result analysis
+- category: LLM & agent systems
+  items:
+  - LLM API integration
+  - Prompt engineering
+  - RAG
+  - Tool calling
+  - Agent task planning
+- category: Development
+  items:
+  - Git
+  - Linux
+  - LaTeX
+  - Vue 3
+  - Node.js / Express
+  - MySQL
+projects:
+- id: chatrix
+  title: Chatrix
+  category: Customer service / RAG / Agent
+  period: 2026 — present
+  summary: A customer service system with hybrid retrieval, agent routing, source citations, input and output checks, and human handover.
+  stack:
+  - Vue 3
+  - Node.js / Express
+  - MySQL
+  - Hybrid RAG
+  - LLM
+  role: Independent design and implementation
+  details:
+  - Implemented a full-stack platform with Vue 3, Node.js / Express, and MySQL. Built a pipeline covering request checks, FAQ matching, hybrid retrieval, conflict arbitration, generation, and response checks.
+  - Combined BM25 and vector retrieval. Routed requests to FAQ answers, evidence-based answers, refusal, or human handover based on confidence thresholds and safety checks.
+  - Supported PDF, Word, and Markdown ingestion with paragraph-level source citations.
+  - Compiled structured persona settings into prompts for updates without service restarts. Used rule-based filtering and LLM verification to address prompt injection and unauthorized requests.
+- id: defect-detection
+  title: Industrial Surface Defect Detection
+  category: Computer vision / Deep learning
+  period: 2025 — 2026
+  summary: Model modifications and comparative experiments targeting missed small defects and unstable localization in complex backgrounds.
+  stack:
+  - Python
+  - PyTorch
+  - YOLO
+  - SAM
+  role: Model optimization and experimental evaluation
+  details:
+  - Built training and evaluation workflows using PyTorch, YOLO, and SAM to investigate missed small defects and unstable localization in complex backgrounds.
+  - Adjusted the detection head and introduced a segmentation module to refine candidate defect regions.
+  - Prepared data, modified models, configured training, and conducted comparative experiments.
+  - Ran ablation studies on network structure, data augmentation, and post-processing parameters, evaluating performance with mAP, Recall, and F1.
+awards:
+- title: APMCM Asia-Pacific Mathematical Contest in Modeling
+  result: First Prize
+  year: '2025'
+- title: MathorCup Big Data Competition
+  result: Second Prize
+  year: '2025'
+- title: China International College Students’ Innovation Competition
+  result: Bronze Award
+  year: '2025'
+experience:
+- title: Technical discussion
+  description: Discussed papers and ideas on continual learning, while following LLM agents, tool use, and reasoning.
+- title: Technical lead
+  description: Led solution design, task decomposition, and coordination for the 2025 China International College Students’ Innovation Competition.
+- title: XTech Club · former event planner
+  description: Planned events, arranged schedules, and coordinated on-site execution.
+- title: Industry activities & collaboration
+  description: Volunteered at an innovation and entrepreneurship competition, participated in Huawei Day — Intelligent World 2035, and collaborated with teammates from multiple countries.
+education:
+  subject: Computer Science and Technology · Undergraduate
+  period: September 2023 — present
+  cgpa: 3.80 / 4.00
+  distinctions:
+  - Dean’s List for two consecutive years
+  - Multiple university scholarships
+  courses:
+  - Data Structures
+  - Algorithm Analysis
+  - Machine Learning
+  - Artificial Intelligence

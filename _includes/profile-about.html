@@ -1,0 +1,31 @@
+<header class="page-intro"><h1>{{ ui.about }}</h1><p>{{ ui.about_description }}</p></header>
+
+<section class="detail-section" aria-labelledby="education-heading">
+    <h2 id="education-heading">{{ ui.education }}</h2>
+    <div class="education-heading"><h3>{{ profile.education.subject }}</h3><span class="date-label">{{ profile.education.period }}</span></div>
+    <p class="education-score">{{ ui.cgpa }} <strong>{{ profile.education.cgpa }}</strong></p>
+    <ul class="detail-list">{% for distinction in profile.education.distinctions %}<li>{{ distinction }}</li>{% endfor %}</ul>
+    <p class="education-courses"><span>{{ ui.coursework }}</span>{{ profile.education.courses | join: ' · ' }}</p>
+    <p>{{ ui.english }}</p>
+</section>
+
+<section class="detail-section about-focus" aria-labelledby="focus-heading">
+    <h2 id="focus-heading">{{ ui.focus }}</h2>
+    <p>{{ profile.focus }}</p>
+    <p class="interest-summary">{{ profile.interests | join: ' / ' }}</p>
+</section>
+
+<section class="detail-section" aria-labelledby="skills-heading">
+    <h2 id="skills-heading">{{ ui.skills }}</h2>
+    <dl class="skill-list">{% for group in profile.skills %}<div><dt>{{ group.category }}</dt><dd>{{ group.items | join: ' · ' }}</dd></div>{% endfor %}</dl>
+</section>
+
+<section class="detail-section" aria-labelledby="awards-heading">
+    <h2 id="awards-heading">{{ ui.awards }}</h2>
+    <div class="award-list">{% for award in profile.awards %}<article class="award-row"><span class="date-label">{{ award.year }}</span><div><h3>{{ award.title }}</h3><p>{{ award.result }}</p></div></article>{% endfor %}</div>
+</section>
+
+<section class="detail-section" aria-labelledby="activities-heading">
+    <h2 id="activities-heading">{{ ui.activities }}</h2>
+    <div class="experience-list">{% for experience in profile.experience %}<article><h3>{{ experience.title }}</h3><p>{{ experience.description }}</p></article>{% endfor %}</div>
+</section>

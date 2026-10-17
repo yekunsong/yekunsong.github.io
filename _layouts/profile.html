@@ -1,0 +1,47 @@
+{% assign locale = page.lang | default: 'en' %}
+{% assign ui = site.data.ui[locale] %}
+{% assign profile = site.data.profile %}
+{% assign document_lang = 'en' %}
+{% assign localized_posts = site.posts | where: 'lang', locale %}
+{% if locale == 'zh' %}
+    {% assign profile = site.data.profile_zh %}
+    {% assign document_lang = 'zh-CN' %}
+{% else %}
+    {% assign default_posts = site.posts | where_exp: 'post', 'post.lang == nil' %}
+    {% assign localized_posts = localized_posts | concat: default_posts | sort: 'date' | reverse %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="{{ document_lang }}">
+{% include head.html %}
+{% assign navigation_url = page.url %}
+{% if page.layout == 'post' %}{% assign navigation_url = ui.blog_path %}{% endif %}
+<body class="profile-site">
+    <a class="skip-link" href="#main-content">{{ ui.skip }}</a>
+    <header class="profile-nav shell">
+        <a class="brand" href="{{ ui.home | prepend: site.baseurl }}">Soykng</a>
+        <nav aria-label="{{ ui.navigation_label }}">
+            {% for item in ui.navigation %}
+            <a href="{{ item.url | prepend: site.baseurl }}"{% if navigation_url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
+            {% endfor %}
+        </nav>
+        {% if page.translation_url %}
+        <a class="language-switch" href="{{ page.translation_url | prepend: site.baseurl }}" lang="{{ page.translation_lang }}" hreflang="{{ page.translation_lang }}" aria-label="{{ ui.language_label }}">{{ ui.language_switch }}</a>
+        {% endif %}
+    </header>
+    <main id="main-content" class="shell" tabindex="-1">
+        {% case page.section %}
+            {% when 'home' %}{% include profile-home.html %}
+            {% when 'about' %}{% include profile-about.html %}
+            {% when 'projects' %}{% include profile-projects.html %}
+            {% when 'blog' %}{% include profile-blog.html %}
+            {% when 'tags' %}{% include profile-tags.html %}
+            {% when 'error' %}{% include profile-error.html %}
+        {% endcase %}
+        {{ content }}
+    </main>
+    <footer class="profile-footer shell">
+        <span>© {{ site.time | date: '%Y' }} Soykng</span>
+        <div><a href="https://github.com/{{ site.github_username }}">GitHub</a><a href="{{ '/feed.xml' | prepend: site.baseurl }}">RSS</a><a href="{{ site.github_repo }}">{{ ui.site_source }}</a></div>
+    </footer>
+</body>
+</html>

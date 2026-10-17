@@ -1,0 +1,101 @@
+name: Soykng
+intro: 计算机科学与技术本科在读，主要做大模型应用开发和计算机视觉实验。
+focus: 最近在开发言矩，一个结合 RAG 与 Agent 工作流的客服平台。这里记录项目进展和技术笔记。
+interests:
+- 机器学习
+- 计算机视觉
+- 大语言模型应用
+- AI Agent
+skills:
+- category: 编程语言
+  items:
+  - Python
+  - C++
+  - Java
+- category: 机器学习
+  items:
+  - PyTorch
+  - 模型训练
+  - 超参数调优
+  - 实验设计
+  - 结果分析
+- category: 大模型与 Agent
+  items:
+  - LLM API 集成
+  - 提示词设计
+  - RAG
+  - 工具调用
+  - Agent 任务规划
+- category: 开发工具与框架
+  items:
+  - Git
+  - Linux
+  - LaTeX
+  - Vue 3
+  - Node.js / Express
+  - MySQL
+projects:
+- id: chatrix
+  title: 言矩
+  category: 智能客服 / RAG / Agent
+  period: 2026 年至今
+  summary: 基于混合检索与 Agent 路由的客服系统，支持知识库引用追溯、请求与响应安全检查，以及人工转接。
+  stack:
+  - Vue 3
+  - Node.js / Express
+  - MySQL
+  - RAG
+  - LLM
+  role: 独立设计与开发
+  details:
+  - 使用 Vue 3、Node.js / Express 与 MySQL 实现全栈平台，构建请求检查、FAQ 匹配、混合检索、冲突仲裁、答案生成与响应检查流程。
+  - 结合 BM25 与向量检索，根据置信度及安全检查结果，在 FAQ 直答、基于证据回答、拒答和人工转接之间路由。
+  - 支持 PDF、Word、Markdown 文档导入，并通过段落级引用追溯回答来源。
+  - 将结构化角色配置编译为提示词，支持无需重启服务的配置更新；在输入和输出阶段结合规则过滤与 LLM 验证，处理提示注入与越权请求。
+- id: defect-detection
+  title: 工业表面缺陷检测优化
+  category: 计算机视觉 / 深度学习
+  period: 2025—2026 年
+  summary: 面向复杂背景下的小缺陷漏检和定位不稳定问题，开展检测模型改进与对比实验。
+  stack:
+  - Python
+  - PyTorch
+  - YOLO
+  - SAM
+  role: 模型优化与实验评估
+  details:
+  - 使用 PyTorch、YOLO 与 SAM 搭建训练和评估流程，分析小缺陷漏检及定位不稳定问题。
+  - 调整检测头，引入分割模块以细化候选缺陷区域。
+  - 完成数据准备、模型修改、训练配置与对比实验。
+  - 对网络结构、数据增强及后处理参数进行消融实验，使用 mAP、Recall 和 F1 评估结果。
+awards:
+- title: APMCM 亚太地区数学建模竞赛
+  result: 一等奖
+  year: '2025'
+- title: MathorCup 大数据竞赛
+  result: 二等奖
+  year: '2025'
+- title: 中国国际大学生创新大赛
+  result: 铜奖
+  year: '2025'
+experience:
+- title: 技术交流
+  description: 围绕持续学习交流论文与实验思路，并关注 LLM Agent、工具使用与推理方向。
+- title: 创新大赛技术负责人
+  description: 在 2025 年中国国际大学生创新大赛中负责方案设计、任务拆解与协作推进。
+- title: XTech 社团活动策划
+  description: 曾负责活动策划、日程安排与现场执行协调。
+- title: 行业活动与协作
+  description: 参与创新创业大赛志愿服务及华为日“智能世界 2035”交流活动，曾与多国成员协作完成项目。
+education:
+  subject: 计算机科学与技术 · 本科在读
+  period: 2023 年 9 月至今
+  cgpa: 3.80 / 4.00
+  distinctions:
+  - 连续两年入选院长荣誉名单（Dean’s List）
+  - 多次获得大学奖学金
+  courses:
+  - 数据结构
+  - 算法分析
+  - 机器学习
+  - 人工智能

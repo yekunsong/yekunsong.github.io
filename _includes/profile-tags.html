@@ -1,0 +1,13 @@
+<header class="page-intro"><h1>{{ ui.tags }}</h1></header>
+<div class="tag-groups">
+    {% if localized_posts.size == 0 %}<p class="empty-state">{{ ui.no_tags }}</p>{% endif %}
+    {% for tag in site.tags %}
+        {% assign tag_posts = localized_posts | where_exp: 'post', 'post.tags contains tag[0]' %}
+        {% if tag_posts.size > 0 %}
+        <section class="detail-section" id="{{ tag[0] | escape }}">
+            <h2>{{ tag[0] | escape }}</h2>
+            {% for post in tag_posts %}<article class="post-row"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%Y.%m.%d' }}</time><h3><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a></h3></article>{% endfor %}
+        </section>
+        {% endif %}
+    {% endfor %}
+</div>

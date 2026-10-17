@@ -1,0 +1,24 @@
+<section class="home-intro">
+    <h1>{{ profile.name }}</h1>
+    <p class="intro-description">{{ profile.intro }}</p>
+    <p class="intro-focus">{{ profile.focus }}</p>
+    <div class="intro-links">
+        <a href="https://github.com/{{ site.github_username }}">GitHub <span aria-hidden="true">↗</span></a>
+        <a href="{{ ui.about_path | prepend: site.baseurl }}">{{ ui.about }} <span aria-hidden="true">→</span></a>
+    </div>
+</section>
+
+<section class="content-section" aria-labelledby="blog-heading">
+    <div class="section-heading"><h2 id="blog-heading">{{ ui.blog }}</h2><a class="subtle-link" href="{{ ui.blog_path | prepend: site.baseurl }}">{{ ui.all_posts }} <span aria-hidden="true">→</span></a></div>
+    {% include profile-posts.html limit=3 %}
+</section>
+
+<section class="content-section" aria-labelledby="projects-heading">
+    <div class="section-heading"><h2 id="projects-heading">{{ ui.projects }}</h2><a class="subtle-link" href="{{ ui.projects_path | prepend: site.baseurl }}">{{ ui.all_projects }} <span aria-hidden="true">→</span></a></div>
+    <div class="project-list">{% for project in profile.projects %}{% include project-card.html %}{% endfor %}</div>
+</section>
+
+<section class="content-section skills-summary" aria-labelledby="skills-heading">
+    <div class="section-heading"><h2 id="skills-heading">{{ ui.skills }}</h2></div>
+    <dl class="skill-list">{% for group in profile.skills %}<div><dt>{{ group.category }}</dt><dd>{{ group.items | join: ' · ' }}</dd></div>{% endfor %}</dl>
+</section>

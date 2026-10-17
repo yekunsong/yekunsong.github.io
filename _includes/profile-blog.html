@@ -1,0 +1,2 @@
+<header class="page-intro"><h1>{{ ui.blog }}</h1><p>{{ ui.blog_description }}</p>{% if localized_posts.size > 0 %}<a class="subtle-link" href="{{ ui.tags_path | prepend: site.baseurl }}">{{ ui.tags }}</a>{% endif %}</header>
+<section class="blog-list" aria-label="{{ ui.blog }}">{% include profile-posts.html %}</section>

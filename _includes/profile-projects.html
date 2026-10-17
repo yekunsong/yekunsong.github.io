@@ -1,0 +1,13 @@
+<header class="page-intro"><h1>{{ ui.projects }}</h1><p>{{ ui.projects_description }}</p></header>
+
+<div class="project-details">
+    {% for project in profile.projects %}
+    <article id="{{ project.id }}" class="project-detail">
+        <div class="project-meta"><span>{{ project.category }}</span><span class="date-label">{{ project.period }}</span></div>
+        <h2>{{ project.title }}</h2>
+        <p class="project-lead">{{ project.summary }}</p>
+        <dl class="project-facts"><div><dt>{{ ui.responsibilities }}</dt><dd>{{ project.role }}</dd></div><div><dt>{{ ui.technologies }}</dt><dd>{{ project.stack | join: ' / ' }}</dd></div></dl>
+        <ul class="detail-list">{% for detail in project.details %}<li>{{ detail }}</li>{% endfor %}</ul>
+    </article>
+    {% endfor %}
+</div>

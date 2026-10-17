@@ -1,0 +1,88 @@
+en:
+  home: /
+  projects_path: /projects/
+  about_path: /about/
+  blog_path: /blog/
+  navigation_label: Main navigation
+  language_label: Switch language
+  language_switch: 中文
+  skip: Skip to content
+  navigation:
+  - title: Home
+    url: /
+  - title: Projects
+    url: /projects/
+  - title: About
+    url: /about/
+  - title: Blog
+    url: /blog/
+  projects: Projects
+  about: About
+  all_projects: All projects
+  responsibilities: Implementation
+  technologies: Technologies
+  skills: Skills & tools
+  english: 'English: IELTS 6.5'
+  awards: Awards
+  activities: Experience & collaboration
+  blog: Blog
+  all_posts: All posts
+  no_posts: No posts published yet.
+  blog_description: Technical notes on machine learning, AI applications, and software development.
+  projects_description: Selected projects in LLM applications and computer vision.
+  about_description: Education, technical interests, skills, and experience.
+  site_source: Source
+  focus: Focus
+  education: Education
+  cgpa: CGPA
+  coursework: Core coursework
+  tags: Tags
+  tags_path: /tags/
+  no_tags: No tags yet.
+  not_found: Page not found
+  not_found_description: This page does not exist or has moved.
+  back_home: Back to home
+zh:
+  home: /zh/
+  projects_path: /zh/projects/
+  about_path: /zh/about/
+  blog_path: /zh/blog/
+  navigation_label: 主导航
+  language_label: 切换语言
+  language_switch: EN
+  skip: 跳转到正文
+  navigation:
+  - title: 首页
+    url: /zh/
+  - title: 项目
+    url: /zh/projects/
+  - title: 关于
+    url: /zh/about/
+  - title: 博客
+    url: /zh/blog/
+  projects: 项目
+  about: 关于
+  all_projects: 全部项目
+  responsibilities: 实现内容
+  technologies: 技术栈
+  skills: 技能与工具
+  english: 英语：雅思 6.5
+  awards: 竞赛与荣誉
+  activities: 经历与协作
+  blog: 博客
+  all_posts: 全部文章
+  no_posts: 暂无已发布文章。
+  blog_description: 记录机器学习、AI 应用与软件开发相关的技术笔记。
+  projects_description: 大语言模型应用与计算机视觉方向的项目经历。
+  about_description: 教育经历、技术方向、技能与项目经验。
+  site_source: 网站源码
+  focus: 关注方向
+  education: 教育经历
+  cgpa: 平均绩点
+  coursework: 核心课程
+  tags: 标签
+  tags_path: /zh/tags/
+  no_tags: 暂无标签。
+  not_found: 页面未找到
+  not_found_description: 这个页面不存在，或已移动。
+  back_home: 返回首页
