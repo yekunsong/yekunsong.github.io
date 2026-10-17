@@ -1,0 +1,51 @@
+title: Yekun Song
+SEOTitle: Yekun Song | Personal Blog
+header-img: img/header.svg
+email: ""
+description: "Notes on learning, building, and everyday life."
+keyword: "Yekun Song, blog"
+url: "https://yekunsong.github.io"
+baseurl: ""
+github_repo: "https://github.com/yekunsong/yekunsong.github.io"
+
+sidebar: true
+sidebar-about-description: "Notes on learning and building."
+sidebar-avatar: /img/avatar.svg
+
+author: yekunsong
+RSS: true
+github_username: yekunsong
+
+permalink: pretty
+paginate: 10
+exclude:
+  - less
+  - node_modules
+  - vendor
+  - Gruntfile.js
+  - package.json
+  - package-lock.json
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+anchorjs: true
+plugins:
+  - jekyll-paginate
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+
+gitalk:
+  enable: false
+
+disqus:
+  enable: false
+
+featured-tags: true
+featured-condition-size: 1
+chrome-tab-theme-color: "#1e293b"
+service-worker: false
+friends: []

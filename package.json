@@ -1,0 +1,21 @@
+{
+  "name": "yekunsong-blog",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Personal Jekyll blog framework",
+  "homepage": "https://yekunsong.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yekunsong/yekunsong.github.io.git"
+  },
+  "scripts": {
+    "build": "grunt",
+    "watch": "grunt watch"
+  },
+  "devDependencies": {
+    "grunt": ">=1.3.0",
+    "grunt-contrib-less": "~0.11.4",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-uglify": "~0.5.1"
+  }
+}
