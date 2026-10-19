@@ -1,0 +1,4 @@
+<article class="post-row">
+    <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%Y.%m.%d' }}</time>
+    <div><h3><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a></h3><p class="post-summary">{{ post.description | default: post.excerpt | strip_html | truncate: 130 | escape }}</p></div>
+</article>

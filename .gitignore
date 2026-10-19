@@ -39,3 +39,4 @@ node_modules/
 .jekyll-cache/
 .jekyll-metadata
 .sass-cache/
+.tools/

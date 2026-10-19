@@ -33,6 +33,21 @@ en:
   about_description: Education, technical interests, skills, and experience.
   site_source: Source
   focus: Focus
+  notes: Technical notes
+  project_archive: Project files
+  topics: Research topics
+  selected_work: Projects & experiments
+  notes_empty_title: No entries published yet.
+  notes_empty_description: Machine learning, AI applications, and software development.
+  interface_layer: Interfaces
+  service_layer: Service
+  data_layer: Data & models
+  architecture_figure: System architecture · simplified from project documentation
+  detection: Detection
+  refinement: Region refinement
+  evaluation: Evaluation
+  vision_figure: Experimental workflow · schematic
+  implementation_notes: Implementation notes
   education: Education
   cgpa: CGPA
   coursework: Core coursework
@@ -77,6 +92,21 @@ zh:
   about_description: 教育经历、技术方向、技能与项目经验。
   site_source: 网站源码
   focus: 关注方向
+  notes: 技术笔记
+  project_archive: 项目档案
+  topics: 研究主题
+  selected_work: 项目与实验
+  notes_empty_title: 笔记尚未发布
+  notes_empty_description: 机器学习、AI 应用与软件开发。
+  interface_layer: 访问端
+  service_layer: 业务服务
+  data_layer: 数据与模型
+  architecture_figure: 系统架构 · 依据项目文档整理的简图
+  detection: 目标检测
+  refinement: 区域细化
+  evaluation: 实验评估
+  vision_figure: 实验流程 · 方法示意
+  implementation_notes: 实现与实验
   education: 教育经历
   cgpa: 平均绩点
   coursework: 核心课程

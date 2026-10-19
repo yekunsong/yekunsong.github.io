@@ -1,0 +1,19 @@
+{% if project.id == 'chatrix' %}
+<figure class="project-figure">
+    <div class="system-map">
+        <div class="system-layer"><span class="map-label">{{ ui.interface_layer }}</span><div class="system-node">Vue 3</div><div class="system-node">Widget</div></div>
+        <div class="system-layer system-center"><span class="map-label">{{ ui.service_layer }}</span><div class="system-node service-node">Node.js / Express</div></div>
+        <div class="system-layer"><span class="map-label">{{ ui.data_layer }}</span><div class="system-node">MySQL</div><div class="system-node">LLM</div></div>
+    </div>
+    <figcaption>{{ ui.architecture_figure }}</figcaption>
+</figure>
+{% elsif project.id == 'defect-detection' %}
+<figure class="project-figure">
+    <div class="vision-map">
+        <div class="vision-step"><span class="map-label">{{ ui.detection }}</span><div class="region-study" aria-hidden="true"><i></i><b></b></div><strong>YOLO</strong></div>
+        <div class="vision-step"><span class="map-label">{{ ui.refinement }}</span><div class="mask-study" aria-hidden="true"><i></i></div><strong>SAM</strong></div>
+        <div class="vision-step"><span class="map-label">{{ ui.evaluation }}</span><div class="metric-names"><span>mAP</span><span>Recall</span><span>F1</span></div><strong>PyTorch</strong></div>
+    </div>
+    <figcaption>{{ ui.vision_figure }}</figcaption>
+</figure>
+{% endif %}

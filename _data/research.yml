@@ -1,0 +1,21 @@
+areas:
+  - id: machine-learning
+    title:
+      en: Machine learning
+      zh: 机器学习
+    project: defect-detection
+  - id: computer-vision
+    title:
+      en: Computer vision
+      zh: 计算机视觉
+    project: defect-detection
+  - id: llm-applications
+    title:
+      en: LLM applications
+      zh: 大模型应用
+    project: chatrix
+  - id: agents
+    title:
+      en: AI agents
+      zh: AI Agent
+    project: chatrix

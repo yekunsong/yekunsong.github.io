@@ -1,7 +1,7 @@
 {% if localized_posts.size > 0 %}
     {% for post in localized_posts %}
         {% if include.limit and forloop.index > include.limit %}{% break %}{% endif %}
-        <article class="post-row"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%Y.%m.%d' }}</time><h3><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3></article>
+        {% include post-row.html %}
     {% endfor %}
 {% else %}
     <p class="empty-state">{{ ui.no_posts }}</p>

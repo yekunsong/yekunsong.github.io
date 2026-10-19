@@ -4,7 +4,20 @@ A bilingual Jekyll personal site and blog at https://yekunsong.github.io.
 
 ## Preview
 
-Install Ruby and Bundler, then run:
+On Windows, use Ruby+Devkit 3.3 from [RubyInstaller](https://rubyinstaller.org/downloads/).
+The preview script also detects a checkout-local Ruby installation at `.tools/ruby`.
+From PowerShell in the repository root, run:
+
+```powershell
+.\scripts\preview.ps1
+```
+
+It installs missing gems into `vendor/bundle` and starts Jekyll with live reload.
+Open http://127.0.0.1:4000/zh/ for Chinese or http://127.0.0.1:4000/ for English.
+Keep the terminal open; press Ctrl+C to stop. Use `-Port 4001` to choose another port,
+or `-BuildOnly` to check the build without starting a server.
+
+On other platforms, install Ruby and Bundler, then run:
 
 ```sh
 bundle install
@@ -17,11 +30,13 @@ Open http://127.0.0.1:4000. Run `bundle exec jekyll build` to generate `_site/`.
 
 - `_data/profile.yml` and `_data/profile_zh.yml`: English and Chinese profile content.
 - `_data/ui.yml`: translated labels and navigation.
+- `_data/research.yml`: research topics and their related project IDs.
 - `_layouts/profile.html`: shared site layout.
 - `_layouts/post.html`: article layout.
 - `_includes/`: current page sections.
 - `css/profile.css`: shared styling and CSS interactions.
 - `css/syntax.css`: article code highlighting.
+- `img/archive-study.svg`: original vector artwork for the archive opening.
 
 Education includes the subject, study period, CGPA, distinctions, and coursework.
 The institution name is not included in the site data or rendered pages.

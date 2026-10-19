@@ -1,24 +1,38 @@
-<section class="home-intro">
-    <h1>{{ profile.name }}</h1>
-    <p class="intro-description">{{ profile.intro }}</p>
-    <p class="intro-focus">{{ profile.focus }}</p>
-    <div class="intro-links">
-        <a href="https://github.com/{{ site.github_username }}">GitHub <span aria-hidden="true">↗</span></a>
-        <a href="{{ ui.about_path | prepend: site.baseurl }}">{{ ui.about }} <span aria-hidden="true">→</span></a>
+<header id="overview" class="archive-intro">
+    <div class="intro-copy">
+        <h1>{{ profile.name }}</h1>
+        <p class="intro-description">{{ profile.intro }}</p>
+        <p class="intro-focus">{{ profile.focus }}</p>
+        <div class="intro-links"><a href="https://github.com/{{ site.github_username }}">GitHub <span aria-hidden="true">↗</span></a><a href="{{ ui.about_path | prepend: site.baseurl }}">{{ ui.about }} <span aria-hidden="true">→</span></a></div>
     </div>
-</section>
+    <figure class="archive-cover">
+        <img src="{{ '/img/archive-study.svg' | prepend: site.baseurl }}" width="520" height="320" alt="">
+    </figure>
+</header>
 
-<section class="content-section" aria-labelledby="blog-heading">
-    <div class="section-heading"><h2 id="blog-heading">{{ ui.blog }}</h2><a class="subtle-link" href="{{ ui.blog_path | prepend: site.baseurl }}">{{ ui.all_posts }} <span aria-hidden="true">→</span></a></div>
-    {% include profile-posts.html limit=3 %}
-</section>
+<div class="feature-spread">
+    <section id="notes" aria-labelledby="notes-heading">
+        <div class="section-heading"><h2 id="notes-heading">{{ ui.notes }}</h2><a class="subtle-link" href="{{ ui.blog_path | prepend: site.baseurl }}">{{ ui.all_posts }}</a></div>
+        {% if localized_posts.size > 0 %}
+        <div class="featured-posts">{% include profile-posts.html limit=3 %}</div>
+        {% else %}
+        <div class="notes-empty">
+            <h3>{{ ui.notes_empty_title }}</h3>
+            <p>{{ ui.notes_empty_description }}</p>
+        </div>
+        {% endif %}
+    </section>
+    <section id="projects" aria-labelledby="projects-heading">
+        <div class="section-heading"><h2 id="projects-heading">{{ ui.selected_work }}</h2><a class="subtle-link" href="{{ ui.projects_path | prepend: site.baseurl }}">{{ ui.all_projects }}</a></div>
+        <div class="project-list">{% for project in profile.projects %}{% include project-card.html %}{% endfor %}</div>
+    </section>
+</div>
 
-<section class="content-section" aria-labelledby="projects-heading">
-    <div class="section-heading"><h2 id="projects-heading">{{ ui.projects }}</h2><a class="subtle-link" href="{{ ui.projects_path | prepend: site.baseurl }}">{{ ui.all_projects }} <span aria-hidden="true">→</span></a></div>
-    <div class="project-list">{% for project in profile.projects %}{% include project-card.html %}{% endfor %}</div>
-</section>
-
-<section class="content-section skills-summary" aria-labelledby="skills-heading">
-    <div class="section-heading"><h2 id="skills-heading">{{ ui.skills }}</h2></div>
-    <dl class="skill-list">{% for group in profile.skills %}<div><dt>{{ group.category }}</dt><dd>{{ group.items | join: ' · ' }}</dd></div>{% endfor %}</dl>
+<section id="topics" class="topics-section" aria-labelledby="topics-heading">
+    <h2 id="topics-heading">{{ ui.topics }}</h2>
+    <div class="topic-links">
+        {% for area in site.data.research.areas %}
+        <a id="{{ area.id }}" href="{{ ui.projects_path | prepend: site.baseurl }}#{{ area.project }}">{{ area.title[locale] }}</a>
+        {% endfor %}
+    </div>
 </section>

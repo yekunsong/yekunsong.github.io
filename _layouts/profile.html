@@ -14,11 +14,11 @@
 <html lang="{{ document_lang }}">
 {% include head.html %}
 {% assign navigation_url = page.url %}
-{% if page.layout == 'post' %}{% assign navigation_url = ui.blog_path %}{% endif %}
+{% if page.layout == 'post' or page.section == 'tags' %}{% assign navigation_url = ui.blog_path %}{% endif %}
 <body class="profile-site">
     <a class="skip-link" href="#main-content">{{ ui.skip }}</a>
     <header class="profile-nav shell">
-        <a class="brand" href="{{ ui.home | prepend: site.baseurl }}">Soykng</a>
+        <a class="brand" href="{{ ui.home | prepend: site.baseurl }}"><img src="{{ '/img/avatar.svg' | prepend: site.baseurl }}" width="28" height="28" alt="">Soykng</a>
         <nav aria-label="{{ ui.navigation_label }}">
             {% for item in ui.navigation %}
             <a href="{{ item.url | prepend: site.baseurl }}"{% if navigation_url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
@@ -28,7 +28,7 @@
         <a class="language-switch" href="{{ page.translation_url | prepend: site.baseurl }}" lang="{{ page.translation_lang }}" hreflang="{{ page.translation_lang }}" aria-label="{{ ui.language_label }}">{{ ui.language_switch }}</a>
         {% endif %}
     </header>
-    <main id="main-content" class="shell" tabindex="-1">
+    <main id="main-content" class="archive-main shell" tabindex="-1">
         {% case page.section %}
             {% when 'home' %}{% include profile-home.html %}
             {% when 'about' %}{% include profile-about.html %}

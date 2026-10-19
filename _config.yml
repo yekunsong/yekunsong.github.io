@@ -17,6 +17,9 @@ exclude:
 - README.md
 - LICENSE
 - vendor
+- .tools
+- scripts
+- AGENTS.md
 defaults:
 - scope:
     path: ''
