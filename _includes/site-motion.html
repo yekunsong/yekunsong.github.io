@@ -1,0 +1,331 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    'use strict';
+
+    let main = document.querySelector('.archive-main');
+    if (!main || !Element.prototype.animate) return;
+
+    let currentUrl = new URL(location.href);
+    let requestNumber = 0;
+    let controller;
+    let observer;
+    const animations = new Set();
+    const scrollPositions = new Map();
+    const initialState = history.state && typeof history.state === 'object' ? history.state : {};
+    let sequence = Number(initialState.soykngPage?.id) || 0;
+    let activeEntry = sequence;
+    history.replaceState({ ...initialState, soykngPage: { id: activeEntry } }, '', location.href);
+    history.scrollRestoration = 'manual';
+
+    function settings() {
+        const style = getComputedStyle(document.documentElement);
+        return {
+            distance: parseFloat(style.getPropertyValue('--page-distance')) || 64,
+            duration: parseFloat(style.getPropertyValue('--motion-duration')) || 560,
+            exitDuration: parseFloat(style.getPropertyValue('--page-exit-duration')) || 160,
+            easing: style.getPropertyValue('--motion-easing').trim() || 'ease-out'
+        };
+    }
+
+    function play(element, frames, options) {
+        const animation = element.animate(frames, options);
+        animations.add(animation);
+        const finish = () => animations.delete(animation);
+        animation.finished.then(finish, finish);
+        return animation;
+    }
+
+    function finishAnimations(element) {
+        for (const animation of animations) {
+            if (element && animation.effect?.target !== element) continue;
+            animation.cancel();
+            animations.delete(animation);
+        }
+    }
+
+    function currentFrame(element) {
+        const style = getComputedStyle(element);
+        return { opacity: style.opacity, transform: style.transform };
+    }
+
+    function restoreMain() {
+        if (![...animations].some(animation => animation.effect?.target === main)) return;
+        const frame = currentFrame(main);
+        finishAnimations(main);
+        play(main, [frame, { opacity: 1, transform: 'none' }], { duration: 160, easing: 'ease-out' });
+    }
+
+    function rememberScroll(updateHistory = true) {
+        const position = { x: scrollX, y: scrollY };
+        scrollPositions.set(activeEntry, position);
+        if (updateHistory) {
+            history.replaceState({ ...history.state, soykngPage: { id: activeEntry, scroll: position } }, '', location.href);
+        }
+    }
+
+    function commitHistory(url, mode, state) {
+        if (mode === 'push') {
+            activeEntry = ++sequence;
+            history.pushState({ soykngPage: { id: activeEntry } }, '', url.href);
+        } else {
+            activeEntry = state?.soykngPage?.id ?? ++sequence;
+            sequence = Math.max(sequence, activeEntry);
+            if (!state?.soykngPage || url.href !== location.href) {
+                history.replaceState({ ...state, soykngPage: { id: activeEntry } }, '', url.href);
+            }
+        }
+        currentUrl = url;
+    }
+
+    function revealTarget(target) {
+        for (let element = target; element && element !== document.body; element = element.parentElement) {
+            if (!element.classList.contains('reveal-pending')) continue;
+            element.classList.remove('reveal-pending');
+            observer?.unobserve(element);
+        }
+    }
+
+    function hashTarget(url) {
+        if (!url.hash) return null;
+        try { return document.getElementById(decodeURIComponent(url.hash.slice(1))); }
+        catch { return null; }
+    }
+
+    function restoreScroll(url, position) {
+        const target = hashTarget(url);
+        revealTarget(target);
+        if (position) window.scrollTo({ left: position.x, top: position.y, behavior: 'instant' });
+        else if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+        else window.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+    }
+
+    function observeContent() {
+        observer?.disconnect();
+        if (!('IntersectionObserver' in window)) return;
+        observer = new IntersectionObserver(entries => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                entry.target.classList.remove('reveal-pending');
+                observer.unobserve(entry.target);
+            }
+        }, { threshold: 0.05, rootMargin: '0px 0px -16px 0px' });
+
+        for (const element of main.querySelectorAll('.project-row, .post-row, .project-detail, .detail-section, .topics-section')) {
+            if (element.classList.contains('scroll-reveal')) {
+                if (element.classList.contains('reveal-pending')) observer.observe(element);
+                continue;
+            }
+            if (element.getBoundingClientRect().top < innerHeight ||
+                element.matches(':target') || element.querySelector(':target')) continue;
+            element.classList.add('scroll-reveal', 'reveal-pending');
+            observer.observe(element);
+        }
+    }
+
+    function sectionIndex(header) {
+        return [...header.querySelectorAll('nav a')].findIndex(link => link.hasAttribute('aria-current'));
+    }
+
+    async function prepareStyles(nextDocument, url, signal) {
+        const hrefs = [...nextDocument.head.querySelectorAll('link[rel="stylesheet"]')]
+            .map(link => new URL(link.getAttribute('href'), url).href);
+
+        await Promise.all(hrefs.map(href => {
+            let link = [...document.head.querySelectorAll('link[rel="stylesheet"]')].find(item => item.href === href);
+            if (link?.sheet) return Promise.resolve();
+            return new Promise((resolve, reject) => {
+                const created = !link;
+                if (created) {
+                    link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = href;
+                }
+                const done = error => {
+                    clearTimeout(timeout);
+                    link.removeEventListener('load', loaded);
+                    link.removeEventListener('error', failed);
+                    signal.removeEventListener('abort', aborted);
+                    if (error) {
+                        if (created && error.name !== 'AbortError') link.remove();
+                        reject(error);
+                    } else resolve();
+                };
+                const loaded = () => done();
+                const failed = () => done(new Error('Unable to load page styles.'));
+                const aborted = () => done(new DOMException('Navigation superseded.', 'AbortError'));
+                const timeout = setTimeout(failed, 10000);
+                link.addEventListener('load', loaded, { once: true });
+                link.addEventListener('error', failed, { once: true });
+                signal.addEventListener('abort', aborted, { once: true });
+                if (created) document.head.append(link);
+                if (signal.aborted) aborted();
+            });
+        }));
+
+        return () => {
+            for (const link of document.head.querySelectorAll('link[rel="stylesheet"]')) {
+                if (!hrefs.includes(link.href)) link.remove();
+            }
+        };
+    }
+
+    function updateHead(nextDocument) {
+        document.title = nextDocument.title;
+        document.documentElement.lang = nextDocument.documentElement.lang;
+        const selector = 'meta[name="description"], link[rel="canonical"], link[rel="alternate"]';
+        document.head.querySelectorAll(selector).forEach(element => element.remove());
+        nextDocument.head.querySelectorAll(selector).forEach(element => document.head.append(document.importNode(element, true)));
+    }
+
+    function updateHeader(header, nextHeader) {
+        const links = [...header.querySelectorAll('nav a')];
+        const nextLinks = [...nextHeader.querySelectorAll('nav a')];
+        if (links.length !== nextLinks.length || links.some((link, index) =>
+            link.getAttribute('href') !== nextLinks[index].getAttribute('href') ||
+            link.textContent.trim() !== nextLinks[index].textContent.trim())) {
+            header.replaceWith(document.importNode(nextHeader, true));
+            return;
+        }
+
+        const nextIndicator = nextHeader.querySelector('.nav-indicator');
+        const indicator = header.querySelector('.nav-indicator') ||
+            (nextIndicator && document.importNode(nextIndicator, true));
+        for (const [index, link] of links.entries()) {
+            if (nextLinks[index].hasAttribute('aria-current')) {
+                link.setAttribute('aria-current', 'page');
+                if (indicator) link.append(indicator);
+            } else link.removeAttribute('aria-current');
+        }
+        if (!nextIndicator) indicator?.remove();
+        header.querySelector('.language-switch')?.remove();
+        const language = nextHeader.querySelector('.language-switch');
+        if (language) header.append(document.importNode(language, true));
+    }
+
+    async function navigate(url, mode = 'push', state = null) {
+        rememberScroll(mode !== 'pop');
+        controller?.abort();
+        restoreMain();
+        const number = ++requestNumber;
+        const request = new AbortController();
+        controller = request;
+
+        if (url.pathname === currentUrl.pathname && url.search === currentUrl.search) {
+            finishAnimations();
+            main.removeAttribute('aria-busy');
+            commitHistory(url, mode, state);
+            restoreScroll(url, mode === 'pop' ? scrollPositions.get(activeEntry) || state?.soykngPage?.scroll : null);
+            const target = hashTarget(url);
+            if (target?.tabIndex >= 0 || target === main) target.focus({ preventScroll: true });
+            return;
+        }
+
+        main.setAttribute('aria-busy', 'true');
+        try {
+            const response = await fetch(url.href, { signal: request.signal, headers: { Accept: 'text/html' } });
+            if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) {
+                throw new Error('Unable to load the requested page.');
+            }
+            const destination = new URL(response.url);
+            if (destination.origin !== location.origin) throw new Error('The page redirected outside this site.');
+            destination.hash = url.hash;
+            const nextDocument = new DOMParser().parseFromString(await response.text(), 'text/html');
+            const nextMain = nextDocument.querySelector('.archive-main');
+            const nextHeader = nextDocument.querySelector('.profile-nav');
+            const nextFooter = nextDocument.querySelector('.profile-footer');
+            if (!nextMain || !nextHeader || !nextFooter || nextMain.querySelector('script')) {
+                throw new Error('This page requires a full navigation.');
+            }
+            const finishStyles = await prepareStyles(nextDocument, destination, request.signal);
+            if (request.signal.aborted || number !== requestNumber) return;
+
+            const header = document.querySelector('.profile-nav');
+            const fromIndex = sectionIndex(header);
+            const toIndex = sectionIndex(nextHeader);
+            const direction = fromIndex < 0 || toIndex < 0 ? 0 : Math.sign(toIndex - fromIndex);
+            const oldMain = main;
+            const { distance, duration, exitDuration, easing } = settings();
+            const frame = currentFrame(oldMain);
+            finishAnimations(oldMain);
+            const exit = play(oldMain, [
+                frame,
+                { opacity: 0, transform: 'translateX(' + -direction * distance / 2 + 'px)' }
+            ], { duration: exitDuration, easing: 'ease-in', fill: 'forwards' });
+            await exit.finished.catch(() => {});
+            if (request.signal.aborted || number !== requestNumber) return;
+
+            rememberScroll(mode !== 'pop');
+            const oldIndicator = header.querySelector('.nav-indicator');
+            const indicatorRect = oldIndicator?.getBoundingClientRect();
+            finishAnimations(oldIndicator);
+            observer?.disconnect();
+            commitHistory(destination, mode, state);
+
+            main = document.importNode(nextMain, true);
+            updateHeader(header, nextHeader);
+            oldMain.replaceWith(main);
+            exit.cancel();
+            document.querySelector('.profile-footer').replaceWith(document.importNode(nextFooter, true));
+            const nextSkipLink = nextDocument.querySelector('.skip-link');
+            if (nextSkipLink) document.querySelector('.skip-link')?.replaceWith(document.importNode(nextSkipLink, true));
+            updateHead(nextDocument);
+            finishStyles();
+            main.focus({ preventScroll: true });
+            restoreScroll(destination, mode === 'pop' ? scrollPositions.get(activeEntry) || state?.soykngPage?.scroll : null);
+            observeContent();
+
+            play(main, [
+                { opacity: 0, transform: 'translateX(' + direction * distance + 'px)' },
+                { opacity: 1, transform: 'translateX(0)' }
+            ], { duration, easing });
+
+            const indicator = document.querySelector('.nav-indicator');
+            if (indicator && indicatorRect) {
+                const rect = indicator.getBoundingClientRect();
+                if (rect.width) play(indicator, [
+                    { transform: 'translateX(' + (indicatorRect.left - rect.left) + 'px) scaleX(' + indicatorRect.width / rect.width + ')', transformOrigin: 'left center' },
+                    { transform: 'none', transformOrigin: 'left center' }
+                ], { duration, easing });
+            }
+        } catch (error) {
+            if (request.signal.aborted || number !== requestNumber) return;
+            if (mode === 'pop') location.replace(url.href);
+            else location.assign(url.href);
+        } finally {
+            if (number === requestNumber) main.removeAttribute('aria-busy');
+        }
+    }
+
+    document.addEventListener('click', event => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+        if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self') || link.relList.contains('external')) return;
+        const url = new URL(link.href);
+        if (url.origin !== location.origin || !/^https?:$/.test(url.protocol) ||
+            (!url.pathname.endsWith('/') && !/\.html$/i.test(url.pathname))) return;
+        event.preventDefault();
+        if (url.href !== location.href) navigate(url);
+        else if (main.hasAttribute('aria-busy')) {
+            if (url.href !== currentUrl.href) navigate(url, 'pop', history.state);
+            else {
+                controller?.abort();
+                ++requestNumber;
+                restoreMain();
+                main.removeAttribute('aria-busy');
+            }
+        }
+    });
+
+    window.addEventListener('popstate', event => navigate(new URL(location.href), 'pop', event.state));
+    window.addEventListener('pagehide', () => rememberScroll());
+    window.addEventListener('pageshow', event => {
+        if (event.persisted) {
+            finishAnimations();
+            restoreScroll(currentUrl, scrollPositions.get(activeEntry));
+            observeContent();
+        }
+    });
+    document.addEventListener('focusin', event => revealTarget(event.target));
+    observeContent();
+});
+</script>

@@ -34,6 +34,7 @@ Open http://127.0.0.1:4000. Run `bundle exec jekyll build` to generate `_site/`.
 - `_layouts/profile.html`: shared site layout.
 - `_layouts/post.html`: article layout.
 - `_includes/`: current page sections.
+- `_includes/site-motion.html`: directional page transitions and one-time scroll reveals.
 - `css/profile.css`: shared styling and CSS interactions.
 - `css/syntax.css`: article code highlighting.
 - `img/archive-study.svg`: original vector artwork for the archive opening.
@@ -46,7 +47,23 @@ English pages use `/`, `/about/`, `/projects/`, `/blog/`, and `/tags/`.
 Chinese pages use the `/zh/` prefix. Language links open the corresponding page.
 
 The site uses plain CSS and system fonts. It has no Node.js build step, browser
-JavaScript dependencies, service worker, or versioned asset URLs.
+JavaScript dependencies, or service worker. Stylesheet URLs include the build time
+so updated pages load matching styles. Navigation between sections slides left or
+right according to the header order, and the selected underline moves with it.
+The current page exits over 160ms before its content and title are replaced; the
+next page then enters over 560ms, moving 64px on desktop or 40px on mobile.
+Navigation links persist within the same language so their selected state and
+underline move continuously. Interrupted transitions resume from the current
+visual state. Below-fold content rises by 24px over 560ms on first scroll into
+view; initial page loads have no entrance animation. Motion settings are defined
+in `css/profile.css`.
+The inline script uses the same Web Animations implementation in every browser.
+It loads same-origin HTML pages, updates the shared layout and page metadata, and
+preserves history, scroll positions, language links, and anchors. Failed requests
+fall back to normal navigation; external links, downloads, and new tabs keep their
+standard behavior. Page content containing scripts also uses normal navigation.
+Motion is controlled by the website and stays enabled regardless of the system's
+reduced-motion preference.
 
 ## Posts
 

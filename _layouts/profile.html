@@ -18,10 +18,10 @@
 <body class="profile-site">
     <a class="skip-link" href="#main-content">{{ ui.skip }}</a>
     <header class="profile-nav shell">
-        <a class="brand" href="{{ ui.home | prepend: site.baseurl }}"><img src="{{ '/img/avatar.svg' | prepend: site.baseurl }}" width="28" height="28" alt="">Soykng</a>
+        <a class="brand" href="{{ ui.home | prepend: site.baseurl }}">Soykng</a>
         <nav aria-label="{{ ui.navigation_label }}">
             {% for item in ui.navigation %}
-            <a href="{{ item.url | prepend: site.baseurl }}"{% if navigation_url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
+            <a href="{{ item.url | prepend: site.baseurl }}"{% if navigation_url == item.url %} aria-current="page"{% endif %}>{{ item.title }}{% if navigation_url == item.url %}<span class="nav-indicator" aria-hidden="true"></span>{% endif %}</a>
             {% endfor %}
         </nav>
         {% if page.translation_url %}
