@@ -1,6 +1,6 @@
 name: Soykng
 intro: Computer Science and Technology undergraduate working on LLM applications and computer vision.
-focus: Currently working on Chatrix, a customer service platform built around RAG and agent workflows. This site collects my projects and technical notes.
+focus: I am building Chatrix, an AI agent platform for enterprise websites, focusing on knowledge retrieval, workflow execution, and human collaboration. This site collects my project work and technical notes.
 interests:
 - Machine learning
 - Computer vision
@@ -37,21 +37,26 @@ skills:
 projects:
 - id: chatrix
   title: Chatrix
-  category: Customer service / RAG / Agent
+  category: Website AI agents / LLM applications / Full-stack development
   period: 2026 — present
-  summary: A customer service system with hybrid retrieval, agent routing, source citations, input and output checks, and human handover.
+  summary: An AI agent platform for enterprise websites, connecting company knowledge, visual workflows, website chat windows, and live support to answer questions, guide visitors, and complete controlled business tasks.
   stack:
   - Vue 3
   - Node.js / Express
   - MySQL
-  - Hybrid RAG
+  - RAG
   - LLM
-  role: Independent design and implementation
+  role: Independent system design and full-stack development
+  links:
+  - label: Website
+    url: https://www.yanjutech.com/en
+  - label: Product overview
+    url: https://www.yanjutech.com/en/product
   details:
-  - Implemented a full-stack platform with Vue 3, Node.js / Express, and MySQL. Built a pipeline covering request checks, FAQ matching, hybrid retrieval, conflict arbitration, generation, and response checks.
-  - Combined BM25 and vector retrieval. Routed requests to FAQ answers, evidence-based answers, refusal, or human handover based on confidence thresholds and safety checks.
-  - Supported PDF, Word, and Markdown ingestion with paragraph-level source citations.
-  - Compiled structured persona settings into prompts for updates without service restarts. Used rule-based filtering and LLM verification to address prompt injection and unauthorized requests.
+  - Knowledge and answers. Integrated published FAQs, knowledge retrieval, and source citations into conversations, with explicit paths for fixed answers, evidence-based answers, refusal, and human handoff when knowledge is insufficient.
+  - Agents and website releases. Separated editable drafts, immutable versions, and release records. Environment, site, and channel bindings determine the version used online, while registered website origins constrain widget access.
+  - Workflows and execution. Defined structured node inputs and outputs, conditional branches, and tool calls, with waiting, resumption, and execution records. Tool execution follows version authorizations and the applicable confirmation requirements.
+  - Data scope and human collaboration. Enforced platform, organization, and personal ownership boundaries. Human handoff retains visitor questions, assistant replies, and handoff summaries; question insights and run records support knowledge and workflow review.
 - id: defect-detection
   title: Industrial Surface Defect Detection
   category: Computer vision / Deep learning

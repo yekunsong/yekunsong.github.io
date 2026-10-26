@@ -10,7 +10,7 @@
         </header>
         {% include project-figure.html %}
         <div class="project-detail-body">
-            <dl class="project-facts"><div><dt>{{ ui.responsibilities }}</dt><dd>{{ project.role }}</dd></div><div><dt>{{ ui.technologies }}</dt><dd>{{ project.stack | join: ' / ' }}</dd></div></dl>
+            <dl class="project-facts"><div><dt>{{ ui.responsibilities }}</dt><dd>{{ project.role }}</dd></div><div><dt>{{ ui.technologies }}</dt><dd>{{ project.stack | join: ' / ' }}</dd></div>{% if project.links %}<div><dt>{{ ui.project_links }}</dt><dd>{% for link in project.links %}<a href="{{ link.url }}">{{ link.label }}</a>{% unless forloop.last %} / {% endunless %}{% endfor %}</dd></div>{% endif %}</dl>
             <div class="implementation-notes"><h3 class="implementation-heading">{{ ui.implementation_notes }}</h3><ul class="detail-list">{% for detail in project.details %}<li>{{ detail }}</li>{% endfor %}</ul></div>
         </div>
     </article>

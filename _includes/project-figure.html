@@ -1,9 +1,9 @@
 {% if project.id == 'chatrix' %}
 <figure class="project-figure">
     <div class="system-map">
-        <div class="system-layer"><span class="map-label">{{ ui.interface_layer }}</span><div class="system-node">Vue 3</div><div class="system-node">Widget</div></div>
-        <div class="system-layer system-center"><span class="map-label">{{ ui.service_layer }}</span><div class="system-node service-node">Node.js / Express</div></div>
-        <div class="system-layer"><span class="map-label">{{ ui.data_layer }}</span><div class="system-node">MySQL</div><div class="system-node">LLM</div></div>
+        <div class="system-layer"><span class="map-label">{{ ui.interface_layer }}</span><div class="system-node">{{ ui.console_node }}</div><div class="system-node">{{ ui.widget_node }}</div></div>
+        <div class="system-layer system-center"><span class="map-label">{{ ui.service_layer }}</span><div class="system-node service-node">{{ ui.service_node }}</div></div>
+        <div class="system-layer"><span class="map-label">{{ ui.data_layer }}</span><div class="system-node">{{ ui.storage_node }}</div><div class="system-node">{{ ui.model_node }}</div></div>
     </div>
     <figcaption>{{ ui.architecture_figure }}</figcaption>
 </figure>
