@@ -1,6 +1,12 @@
 <article class="project-row">
     <div class="project-heading">
-        <h3><a href="{{ ui.projects_path | prepend: site.baseurl }}#{{ project.id }}">{{ project.title }}</a></h3>
+        <div class="project-title-group">
+            <h3><a href="{{ ui.projects_path | prepend: site.baseurl }}#{{ project.id }}">{{ project.title }}</a></h3>
+            {% if project.links %}
+            {% assign project_website = project.links | first %}
+            <a class="project-website-link" href="{{ project_website.url }}" aria-label="{{ project.title }} {{ ui.project_website }}">{{ ui.project_website }} <span aria-hidden="true">↗</span></a>
+            {% endif %}
+        </div>
         <span class="date-label">{{ project.period }}</span>
     </div>
     <p class="project-description">{{ project.summary }}</p>

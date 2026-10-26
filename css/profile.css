@@ -74,6 +74,8 @@ body.profile-site { display: flex; flex-direction: column; min-height: 100vh; ma
 .project-heading h3 { min-width: 0; font-size: 24px; line-height: 1.5; letter-spacing: -.4px; overflow-wrap: anywhere; }
 .project-heading a { color: var(--text); }
 .project-heading a:hover { color: var(--accent); }
+.project-title-group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; min-width: 0; }
+.project-heading .project-website-link { flex-shrink: 0; color: var(--accent); font-size: 13px; white-space: nowrap; }
 .profile-site .project-description { max-width: 65ch; margin: 0; font-size: 15px; line-height: 1.9; text-wrap: balance; }
 .topics-section { display: flex; align-items: baseline; gap: 48px; margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--line); }
 .topics-section h2 { flex-shrink: 0; color: var(--secondary); font-size: 15px; font-weight: 500; }
